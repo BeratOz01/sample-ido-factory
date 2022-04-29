@@ -92,9 +92,9 @@ contract("Factory Contract", async (accounts) => {
   describe("Sale Contract Initialization", () => {
     it("Should initialize correctly", async () => {
       let counter = await factory.saleCounter();
-      let address = await factory.getSale(parseInt(counter) - 1);
+      let infoSale = await factory.getSale(parseInt(counter) - 1);
 
-      sale = await Sale.at(address);
+      sale = await Sale.at(infoSale.saleAddress);
     });
 
     it("Should set contract successfully", async () => {

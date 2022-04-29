@@ -5,7 +5,9 @@ pragma solidity ^0.8.0;
 
 // Imports
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol"; // ERC20 interface
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol"; //  Ownable.sol
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol"; //  ReentrancyGuard.sol
+import "./Portfolio.sol"; // Portfolio Contract
+import "./lib/IDO.sol";
 
 // Errors
 error OnlySaleAdmin();
@@ -34,6 +36,9 @@ contract Sale is ReentrancyGuard {
     event TokenWithdrawn(address user, uint256 amount);
     event OwnerWithdrawn(uint256 amount);
 
+    // Portfolio Contract
+    Portfolio public portfolioContract;
+
     // Admin of sale
     address public admin;
 
@@ -54,10 +59,10 @@ contract Sale is ReentrancyGuard {
     IERC20 public paymentToken;
 
     // Minimum distribution amount
-    uint256 public minDistributionAmount;
+    uint256 public minDistributionAmount = 1 ether;
 
     // Maximum distribution amount
-    uint256 public maxDistributionAmount;
+    uint256 public maxDistributionAmount = 10 ether;
 
     // Total Token For Sale
     uint256 public totalTokenForBuyed;
@@ -68,15 +73,26 @@ contract Sale is ReentrancyGuard {
     // Sale Name
     string public name;
 
+    // Sale ID
+    uint256 public saleId;
+
+    // Number of people who bought tokens
+    uint256 public numberOfBuyers;
+
     constructor(
+        uint256 _id,
         string memory _name,
         uint256 _numberOfPortion,
         uint256 _timeBetweenPortions,
         uint256 _price,
         address _admin,
         IERC20 _projectToken,
-        IERC20 _paymentToken
+        IERC20 _paymentToken,
+        Portfolio _portfolioContract
     ) {
+        // Set ID of sale
+        saleId = _id;
+
         // Set name of sale
         name = _name;
 
@@ -107,9 +123,8 @@ contract Sale is ReentrancyGuard {
         projectToken = _projectToken;
         paymentToken = _paymentToken;
 
-        // Setting min & max distribution amount
-        minDistributionAmount = 1 ether;
-        maxDistributionAmount = 10 ether;
+        // Setting portfolio contract
+        portfolioContract = _portfolioContract;
     }
 
     // Modifier
@@ -169,6 +184,24 @@ contract Sale is ReentrancyGuard {
         // Update total token buyed variable
         totalTokenForBuyed = totalTokenForBuyed + amount;
 
+        // Memory variable for investment
+        IDOLib.Investment memory _invesment = IDOLib.Investment(
+            saleId,
+            name,
+            amount,
+            0,
+            price,
+            distributionDates,
+            isPortionWithdrawn,
+            false
+        );
+
+        // Add investment to portfolio
+        portfolioContract.addPortfolio(_invesment, participant);
+
+        numberOfBuyers += 1;
+
+        // Emit token sold event
         emit TokenSold(participant, amount);
     }
 
@@ -212,7 +245,16 @@ contract Sale is ReentrancyGuard {
         // Transfer token to user
         require(projectToken.transfer(user, withdrawAmount));
 
+        // Emit token withdrawn event
         emit TokenWithdrawn(user, withdrawAmount);
+
+        // Modify portfolio
+        portfolioContract.updatePortolio(
+            user,
+            saleId,
+            withdrawAmount,
+            participant.isPortionWithdrawn
+        );
     }
 
     // Get Info From User

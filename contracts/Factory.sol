@@ -7,6 +7,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol"; // ERC20 interface
 import "@openzeppelin/contracts/access/Ownable.sol"; //  Ownable.sol
 import "./Sale.sol"; // Sale Contract
+import "./Portfolio.sol";
 
 contract Factory is Ownable {
     // Sale Counters
@@ -19,7 +20,10 @@ contract Factory is Ownable {
     mapping(address => uint256[]) internal userToSales;
 
     // Id to sale mapping
-    mapping(uint256 => address) internal saleIdToAddress;
+    mapping(uint256 => InfoSale) internal saleIdToSale;
+
+    // Is Sale mapping for checking if sale is valid for add to portfolio
+    mapping(address => bool) internal isSale;
 
     // Array of sales
     address[] internal sales;
@@ -27,11 +31,25 @@ contract Factory is Ownable {
     // Payment Token Will Be Always the same
     IERC20 public paymentToken;
 
-    // Events
-    event SaleCreated(uint256 index, address saleAddress);
+    // Portfolio Contract
+    Portfolio public portfolioContract;
 
-    constructor(IERC20 _paymentToken) Ownable() {
+    // Sale Struct
+    struct InfoSale {
+        uint256 id;
+        address saleAddress;
+        uint256 price;
+        uint256 numberOfPortions;
+        uint256 timeBetweenPortions;
+        address projectToken;
+    }
+
+    // Events
+    event SaleCreated(uint256 index, InfoSale infoSale);
+
+    constructor(IERC20 _paymentToken, Portfolio _portfolio) Ownable() {
         paymentToken = _paymentToken;
+        portfolioContract = _portfolio;
     }
 
     // Create a new sale
@@ -47,13 +65,15 @@ contract Factory is Ownable {
 
         // Create a new sale
         Sale newSale = new Sale(
+            saleCounter,
             _name,
             _numberOfPortions,
             _timeBetweenPortions,
             _price,
             msg.sender,
             _projectToken,
-            paymentToken
+            paymentToken,
+            portfolioContract
         );
 
         address saleAddress = address(newSale);
@@ -61,17 +81,25 @@ contract Factory is Ownable {
         // Add the sale to the array
         sales.push(address(saleAddress));
 
-        // Add the sale to the mapping
-        saleIdToAddress[saleCounter] = saleAddress;
+        // Make sale valid
+        isSale[saleAddress] = true;
 
-        // Add the sale to the mapping
+        // Edit saleIdToSale mapping
+        saleIdToSale[saleCounter].id = saleCounter;
+        saleIdToSale[saleCounter].saleAddress = saleAddress;
+        saleIdToSale[saleCounter].price = _price;
+        saleIdToSale[saleCounter].numberOfPortions = _numberOfPortions;
+        saleIdToSale[saleCounter].timeBetweenPortions = _timeBetweenPortions;
+        saleIdToSale[saleCounter].projectToken = address(_projectToken);
+
+        // Add the sale to the users collection mapping
         userToSales[msg.sender].push(saleCounter);
 
         // Increase the sale counter
         saleCounter++;
 
         // Emit the event
-        emit SaleCreated(saleCounter - 1, saleAddress);
+        emit SaleCreated(saleCounter - 1, saleIdToSale[saleCounter - 1]);
     }
 
     // Getter function for users' sales
@@ -92,9 +120,9 @@ contract Factory is Ownable {
     function getSale(uint256 _saleId)
         public
         view
-        returns (address saleAddress)
+        returns (InfoSale memory saleAddress)
     {
-        return saleIdToAddress[_saleId];
+        return saleIdToSale[_saleId];
     }
 
     // Getter function for sales length
@@ -122,5 +150,10 @@ contract Factory is Ownable {
         }
 
         return saleAddresses;
+    }
+
+    // External function for check validness of the address
+    function isSaleValid(address _saleAddress) external view returns (bool) {
+        return isSale[_saleAddress];
     }
 }
