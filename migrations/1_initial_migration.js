@@ -1,5 +1,6 @@
 const Factory = artifacts.require("Factory");
 const PaymentToken = artifacts.require("PaymentToken");
+const ProjectToken = artifacts.require("ProjectToken");
 
 module.exports = async function (deployer, networks, accounts) {
   // Global variables for the contract
@@ -13,4 +14,7 @@ module.exports = async function (deployer, networks, accounts) {
 
   // Deploy Factory contract
   await deployer.deploy(Factory, paymentTokenAddress, { from: admin });
+
+  // Deploy Sample Project Token
+  await deployer.deploy(ProjectToken, { from: admin });
 };

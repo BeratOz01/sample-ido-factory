@@ -8,12 +8,12 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol"; // ERC20 interface
 import "@openzeppelin/contracts/access/Ownable.sol"; //  Ownable.sol
 import "./Sale.sol"; // Sale Contract
 
-// Errors
-error WrongValue();
-
 contract Factory is Ownable {
     // Sale Counters
     uint256 public saleCounter;
+
+    // Maximum amount for creating IDO
+    uint256 public constant maxAmount = 5;
 
     // Users to sale mapping
     mapping(address => uint256[]) internal userToSales;
@@ -42,7 +42,8 @@ contract Factory is Ownable {
         uint256 _price,
         IERC20 _projectToken
     ) public {
-        // Check if the user is the owner
+        // Check if the sale is not full
+        require(userToSales[msg.sender].length < maxAmount, "Sale is full");
 
         // Create a new sale
         Sale newSale = new Sale(

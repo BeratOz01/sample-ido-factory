@@ -99,7 +99,7 @@ contract Sale is ReentrancyGuard {
         for (index; index < numberOfPortions; index++) {
             distributionDates[index] =
                 block.timestamp +
-                index *
+                (index + 1) *
                 timeBetweenPortions;
         }
 
@@ -138,7 +138,7 @@ contract Sale is ReentrancyGuard {
         }
 
         // Amount of project token
-        uint256 amountOfProjectToken = (amountInPaymentToken * 10**18) * price;
+        uint256 amountOfProjectToken = (amountInPaymentToken * 10**18) / price;
 
         require(paymentToken.transferFrom(user, admin, amountInPaymentToken));
 
@@ -157,7 +157,7 @@ contract Sale is ReentrancyGuard {
         // Every user can only buy once
         require(
             userToParticipant[participant].vestedAmount == 0,
-            "User already buyed"
+            "User already participated in this sale."
         );
 
         bool[] memory isPortionWithdrawn = new bool[](distributionDates.length);
@@ -185,20 +185,23 @@ contract Sale is ReentrancyGuard {
             "User has already withdrawn all of the token."
         );
 
+        // Local Variables
         uint256 withdrawAmount;
 
-        uint256 index;
         bool isPortionUnlocked;
-        uint256 length = distributionDates.length;
+        uint256 length = distributionDates.length; // For Gas Optimization
 
+        uint256 index;
         for (index; index < length; index++) {
             isPortionUnlocked = block.timestamp > distributionDates[index];
 
             if (isPortionUnlocked && !participant.isPortionWithdrawn[index]) {
-                withdrawAmount = (participant.vestedAmount / numberOfPortions); //  ?
+                withdrawAmount = participant.vestedAmount / numberOfPortions;
                 participant.isPortionWithdrawn[index] = true;
             }
         }
+
+        require(withdrawAmount > 0, "Nothing to withdraw");
 
         // Update participant struct in mapping
         participant.withdrawnAmount += withdrawAmount;
@@ -236,5 +239,10 @@ contract Sale is ReentrancyGuard {
     // Get Info From msg.sender
     function getInfo__sender() external view returns (Info[] memory) {
         return getInfo(msg.sender);
+    }
+
+    // Get distribution dates
+    function getDistributionDates() public view returns (uint256[] memory) {
+        return distributionDates;
     }
 }
