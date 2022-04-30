@@ -193,7 +193,8 @@ contract Sale is ReentrancyGuard {
             price,
             distributionDates,
             isPortionWithdrawn,
-            false
+            false,
+            address(projectToken)
         );
 
         // Add investment to portfolio

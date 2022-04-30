@@ -10,7 +10,6 @@ const { expect } = require("chai");
 const chai = require("chai");
 const ChaiTruffle = require("chai-truffle");
 const truffleAssert = require("truffle-assertions");
-const BN = require("bn.js");
 
 // Helper function
 function toWei(value) {

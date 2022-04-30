@@ -40,6 +40,24 @@ contract Portfolio is Ownable {
         return usersInvesments[msg.sender];
     }
 
+    // Getter function for individual investment
+    function getInvestment(uint256 _id)
+        external
+        view
+        returns (IDOLib.Investment memory)
+    {
+        require(
+            usersInvesments[msg.sender].length > 0,
+            "User has no investments"
+        );
+        require(
+            _id < usersInvesments[msg.sender].length,
+            "Investment does not exist"
+        );
+
+        return usersInvesments[msg.sender][_id];
+    }
+
     // Getter function for check if invesment already exists
     function isInvesmentExists(address user, uint256 _saleId)
         external
@@ -89,7 +107,24 @@ contract Portfolio is Ownable {
                     .withdrawnAmount = newWithdrawnAmount;
                 usersInvesments[user][index]
                     .isPortionWithdrawn = newPortionArray;
+                if (isFinished(newPortionArray))
+                    usersInvesments[user][index].isFinished = true;
             }
         }
+    }
+
+    // Internal function for set isFinished variable
+    function isFinished(bool[] memory arr) internal pure returns (bool) {
+        bool finished = true;
+
+        uint256 length = arr.length;
+        uint256 index;
+        for (index; index < length; index++) {
+            if (!arr[index]) {
+                finished = false;
+            }
+        }
+
+        return finished;
     }
 }

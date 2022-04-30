@@ -13,5 +13,6 @@ library IDOLib {
         uint256[] distributionDates;
         bool[] isPortionWithdrawn;
         bool isFinished;
+        address tokenAddress;
     }
 }
