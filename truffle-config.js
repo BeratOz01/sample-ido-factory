@@ -72,6 +72,7 @@ module.exports = {
     // production: true    // Treats this network as if it was a public net. (default: false)
     // }
   },
+  contracts_build_directory: "./client/public/contracts",
 
   // Set default mocha options here, use special reporters etc.
   mocha: {

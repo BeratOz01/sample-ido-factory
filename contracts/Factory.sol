@@ -7,7 +7,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol"; // ERC20 interface
 import "@openzeppelin/contracts/access/Ownable.sol"; //  Ownable.sol
 import "./Sale.sol"; // Sale Contract
-import "./Portfolio.sol";
+import "./Portfolio.sol"; // Portfolio Contract
 
 contract Factory is Ownable {
     // Sale Counters

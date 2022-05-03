@@ -8,7 +8,10 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol"; // ERC20.sol
 
 contract PaymentToken is ERC20 {
     // Constant variable for cooldown time
-    uint256 public constant COOLDOWN_TIME = 10 * 60; // 10 Minutes
+    uint256 public constant COOLDOWN_TIME = 10 * 60;
+
+    // Total requested token amount
+    uint256 public totalRequestedTokenAmount;
 
     // Mapping for address to cooldown
     mapping(address => uint256) internal cooldowns;
@@ -36,6 +39,9 @@ contract PaymentToken is ERC20 {
 
         // Mint payment token to user (10 Ether Payment Token)
         _mint(_user, 10 * 10**18);
+
+        // Update total requested token amount
+        totalRequestedTokenAmount += 10 * 10**18;
 
         // Set cooldown for user
         cooldowns[_user] = block.timestamp + COOLDOWN_TIME;
