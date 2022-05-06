@@ -15,8 +15,14 @@ contract Portfolio is Ownable {
     // Mapping for user address to Component struct
     mapping(address => IDOLib.Investment[]) internal usersInvesments;
 
+    // Mapping for created ERC20 tokens
+    mapping(address => IDOLib.ERC20[]) internal userERC20s;
+
     // Factory contract
     Factory public factoryContract;
+
+    // Token Creator Contract
+    address public tokenCreator;
 
     constructor() {}
 
@@ -31,6 +37,15 @@ contract Portfolio is Ownable {
         _;
     }
 
+    // Msg.sender needs to be token creator account for ERC20 portfolio
+    modifier isTokenCreator() {
+        require(
+            msg.sender == tokenCreator,
+            "Only token creator can add to portfolio"
+        );
+        _;
+    }
+
     // Getter function for msg.sender portfolio
     function getMyPortfolio()
         external
@@ -38,6 +53,11 @@ contract Portfolio is Ownable {
         returns (IDOLib.Investment[] memory)
     {
         return usersInvesments[msg.sender];
+    }
+
+    // Getter function for msg.sender ERC20 tokens
+    function getMyERC20s() external view returns (IDOLib.ERC20[] memory) {
+        return userERC20s[msg.sender];
     }
 
     // Getter function for individual investment
@@ -126,5 +146,28 @@ contract Portfolio is Ownable {
         }
 
         return finished;
+    }
+
+    // External function for add new ERC20 token to portfolio
+    function addERC20(
+        address user,
+        string memory name,
+        string memory symbol,
+        uint256 totalSupply,
+        address tokenAddress
+    ) external isTokenCreator {
+        IDOLib.ERC20 memory newERC20 = IDOLib.ERC20(
+            name,
+            symbol,
+            totalSupply,
+            tokenAddress
+        );
+
+        userERC20s[user].push(newERC20);
+    }
+
+    // Setter function for set token creator
+    function setTokenCreator(address _tokenCreator) external onlyOwner {
+        tokenCreator = _tokenCreator;
     }
 }

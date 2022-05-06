@@ -8,9 +8,6 @@ import { useWeb3 } from "components/providers";
 import styles from "./style.module.css";
 import { Container, Button, Spinner } from "react-bootstrap";
 
-// Images
-import avax from "images/avax-logo.png";
-
 const PaymentTokenCard = () => {
   const { payment, web3 } = useWeb3();
   const { account } = useAccount();
@@ -33,7 +30,6 @@ const PaymentTokenCard = () => {
       else {
         setCanRequest(false);
         setCooldown(cooldown);
-        console.log(cooldown);
       }
 
       // How to get block.timestamp in react

@@ -37,6 +37,7 @@ contract Factory is Ownable {
     // Sale Struct
     struct InfoSale {
         uint256 id;
+        string name;
         address saleAddress;
         uint256 price;
         uint256 numberOfPortions;
@@ -86,6 +87,7 @@ contract Factory is Ownable {
 
         // Edit saleIdToSale mapping
         saleIdToSale[saleCounter].id = saleCounter;
+        saleIdToSale[saleCounter].name = _name;
         saleIdToSale[saleCounter].saleAddress = saleAddress;
         saleIdToSale[saleCounter].price = _price;
         saleIdToSale[saleCounter].numberOfPortions = _numberOfPortions;

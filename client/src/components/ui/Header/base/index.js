@@ -7,9 +7,13 @@ import { Navbar, Container, Nav, Spinner, NavDropdown } from "react-bootstrap";
 import { useAccount } from "components/hooks/web3";
 import { useWeb3 } from "components/providers";
 
+// react-router-dom
+import { useHistory } from "react-router-dom";
+
 const Header = () => {
   const { account } = useAccount();
   const { connect } = useWeb3();
+  let history = useHistory();
 
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -21,7 +25,11 @@ const Header = () => {
   return (
     <Navbar bg="dark" expand="lg" className="py-2 d-flex">
       <Container>
-        <Navbar.Brand className="text-light poppins">
+        <Navbar.Brand
+          className="text-light poppins"
+          onClick={() => history.push("/")}
+          style={{ cursor: "pointer" }}
+        >
           Public Launchpad
         </Navbar.Brand>
         <Navbar.Toggle
@@ -37,6 +45,7 @@ const Header = () => {
               <Nav.Item
                 className="text-light poppins bg-warning py-2 px-3 rounded-pill mt-2"
                 style={{ cursor: "pointer" }}
+                onClick={() => history.push("/create")}
               >
                 Create Your IDO
               </Nav.Item>

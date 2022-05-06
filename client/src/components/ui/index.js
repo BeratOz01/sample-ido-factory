@@ -4,3 +4,7 @@ export * from "./WrongNetwork";
 export * from "./Loading";
 export * from "./PaymentTokenCard";
 export * from "./Information";
+export * from "./LoadingModal";
+export * from "./Sales";
+export * from "./SaleCard";
+export * from "./ERC20Modal";

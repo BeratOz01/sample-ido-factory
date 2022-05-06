@@ -53,7 +53,7 @@ contract PaymentToken is ERC20 {
 
         if (cooldown == 0) return 0;
 
-        return cooldowns[_user] - block.timestamp;
+        return cooldown - block.timestamp;
     }
 
     // Getter remaining cooldown function for msg.sender

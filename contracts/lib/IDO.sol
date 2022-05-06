@@ -15,4 +15,11 @@ library IDOLib {
         bool isFinished;
         address tokenAddress;
     }
+
+    struct ERC20 {
+        string name;
+        string symbol;
+        uint256 totalSupply;
+        address tokenAddress;
+    }
 }

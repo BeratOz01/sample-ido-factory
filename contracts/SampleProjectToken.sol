@@ -8,7 +8,11 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol"; // ERC20.sol
 
 contract ProjectToken is ERC20 {
     // Constructor
-    constructor() ERC20("ProjectToken", "PTKN") {
-        _mint(msg.sender, 1000 * 10**18);
+    constructor(
+        string memory name,
+        string memory symbol,
+        uint256 _supply
+    ) ERC20(name, symbol) {
+        _mint(msg.sender, _supply * 10**18);
     }
 }

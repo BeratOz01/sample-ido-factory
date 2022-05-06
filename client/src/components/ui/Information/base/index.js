@@ -17,7 +17,6 @@ const Information = () => {
   React.useEffect(() => {
     async function fetchData() {
       setIsLoading(true);
-      console.log("xd");
       await payment.methods
         .totalRequestedTokenAmount()
         .call()

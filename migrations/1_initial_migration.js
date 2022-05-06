@@ -2,6 +2,7 @@ const Factory = artifacts.require("Factory");
 const Portfolio = artifacts.require("Portfolio");
 const PaymentToken = artifacts.require("PaymentToken");
 const ProjectToken = artifacts.require("ProjectToken");
+const TokenCreator = artifacts.require("TokenCreator");
 
 module.exports = async function (deployer, networks, accounts) {
   // Global variables for the contract
@@ -23,6 +24,9 @@ module.exports = async function (deployer, networks, accounts) {
     from: admin,
   });
 
+  // Deploy Token Creator contract
+  await deployer.deploy(TokenCreator, Portfolio.address, { from: admin });
+
   // Factory contract address
   const factoryAddress = Factory.address;
 
@@ -33,6 +37,13 @@ module.exports = async function (deployer, networks, accounts) {
     from: admin,
   });
 
-  // Deploy Sample Project Token
-  await deployer.deploy(ProjectToken, { from: admin });
+  // Set token creator contract address in Portfolio Contract
+  await portfolioInstance.setTokenCreator(TokenCreator.address, {
+    from: admin,
+  });
+
+  // Deploy Sample Project Token from token creator
+  await deployer.deploy(ProjectToken, "Project Token", "SPT", 100000, {
+    from: admin,
+  });
 };

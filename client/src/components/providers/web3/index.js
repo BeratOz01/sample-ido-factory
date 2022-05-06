@@ -12,13 +12,23 @@ import { loadContract } from "utils/loadContract";
 
 const Web3Context = React.createContext(null);
 
-const createWeb3State = ({ web3, provider, isLoading, payment, factory }) => {
+const createWeb3State = ({
+  web3,
+  provider,
+  isLoading,
+  payment,
+  factory,
+  project,
+  creator,
+}) => {
   return {
     web3,
     provider,
     isLoading,
     payment,
     factory,
+    project,
+    creator,
     hooks: setupHooks(web3, provider),
   };
 };
@@ -31,6 +41,8 @@ export default function Web3Provider({ children }) {
       isLoading: true,
       payment: null,
       factory: null,
+      project: null,
+      creator: null,
     })
   );
 
@@ -42,6 +54,8 @@ export default function Web3Provider({ children }) {
         const web3 = new Web3(provider);
         const payment = await loadContract("PaymentToken", web3);
         const factory = await loadContract("Factory", web3);
+        const project = await loadContract("ProjectToken", web3);
+        const creator = await loadContract("TokenCreator", web3);
         setWeb3Api(
           createWeb3State({
             web3,
@@ -49,6 +63,8 @@ export default function Web3Provider({ children }) {
             isLoading: false,
             payment,
             factory,
+            project,
+            creator,
           })
         );
       } else {

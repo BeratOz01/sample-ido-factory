@@ -12,6 +12,7 @@ import {
   Loading,
   PaymentTokenCard,
   WrongNetwork,
+  Sales,
 } from "components/ui";
 
 const Home = () => {
@@ -29,13 +30,14 @@ const Home = () => {
                 <PaymentTokenCard />
                 <Information />
               </div>
+              <Sales />
             </>
           ) : (
             <WrongNetwork />
           )}
         </>
       ) : (
-        <Loading />
+        <Loading padding={5} />
       )}
     </Container>
   );

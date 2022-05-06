@@ -4,15 +4,20 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // Pages
-import { Home } from "./pages";
+import { Home, Create } from "./pages";
+
+import { Layout } from "components/ui";
 
 function App() {
   return (
     <React.Fragment>
       <Router>
-        <Switch>
-          <Route component={Home} path="/" />
-        </Switch>
+        <Layout>
+          <Switch>
+            <Route component={Create} path="/create" />
+            <Route component={Home} path="/" />
+          </Switch>
+        </Layout>
       </Router>
     </React.Fragment>
   );

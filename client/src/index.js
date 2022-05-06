@@ -5,7 +5,6 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import { Web3Provider } from "./components/providers";
-import { Layout } from "components/ui";
 
 // Bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -14,9 +13,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 ReactDOM.render(
   <Web3Provider>
-    <Layout>
-      <App />
-    </Layout>
+    <App />
   </Web3Provider>,
   document.getElementById("root")
 );
