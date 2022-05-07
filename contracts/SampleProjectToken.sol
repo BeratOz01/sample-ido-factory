@@ -11,8 +11,9 @@ contract ProjectToken is ERC20 {
     constructor(
         string memory name,
         string memory symbol,
-        uint256 _supply
+        uint256 _supply,
+        address _owner
     ) ERC20(name, symbol) {
-        _mint(msg.sender, _supply * 10**18);
+        _mint(_owner, _supply * 10**18);
     }
 }

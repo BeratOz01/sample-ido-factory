@@ -23,7 +23,7 @@ contract Sale is ReentrancyGuard {
         bool[] isPortionWithdrawn; // Array of booleans for each portion
     }
 
-    // Infor struct for send data to front end
+    // Info struct for send data to front end
     struct Info {
         uint256 amount;
         uint256 unlockTime;
@@ -194,7 +194,8 @@ contract Sale is ReentrancyGuard {
             distributionDates,
             isPortionWithdrawn,
             false,
-            address(projectToken)
+            address(projectToken),
+            address(this)
         );
 
         // Add investment to portfolio
@@ -230,7 +231,7 @@ contract Sale is ReentrancyGuard {
             isPortionUnlocked = block.timestamp > distributionDates[index];
 
             if (isPortionUnlocked && !participant.isPortionWithdrawn[index]) {
-                withdrawAmount = participant.vestedAmount / numberOfPortions;
+                withdrawAmount += participant.vestedAmount / numberOfPortions;
                 participant.isPortionWithdrawn[index] = true;
             }
         }
@@ -263,6 +264,10 @@ contract Sale is ReentrancyGuard {
         // Local variable for participant struct
         Participant storage participant = userToParticipant[user];
 
+        if (participant.vestedAmount == 0) {
+            return new Info[](0);
+        }
+
         // Local variable for info struct
         Info[] memory info = new Info[](distributionDates.length);
 
@@ -287,5 +292,34 @@ contract Sale is ReentrancyGuard {
     // Get distribution dates
     function getDistributionDates() public view returns (uint256[] memory) {
         return distributionDates;
+    }
+
+    // Getter function for sale information
+    function getSaleInfo()
+        public
+        view
+        returns (
+            string memory _name,
+            uint256 id,
+            uint256 _numberOfBuyers,
+            uint256 _timeBetweenPortions,
+            uint256[] memory _distributionDates,
+            address _admin,
+            uint256 _totalTokenForBuyed,
+            uint256 _totalTokenWithdrawn,
+            uint256 _price,
+            address _projectToken
+        )
+    {
+        _name = name;
+        id = saleId;
+        _numberOfBuyers = numberOfBuyers;
+        _distributionDates = distributionDates;
+        _admin = admin;
+        _totalTokenForBuyed = totalTokenForBuyed;
+        _totalTokenWithdrawn = totalTokenWithdrawn;
+        _price = price;
+        _projectToken = address(projectToken);
+        _timeBetweenPortions = timeBetweenPortions;
     }
 }

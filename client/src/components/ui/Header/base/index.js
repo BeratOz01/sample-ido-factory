@@ -52,6 +52,7 @@ const Header = () => {
               <Nav.Item
                 className="text-light poppins bg-warning py-2 px-3 rounded-pill mt-2"
                 style={{ cursor: "pointer" }}
+                onClick={() => history.push("/portfolio")}
               >
                 My Portfolio
               </Nav.Item>
@@ -82,14 +83,3 @@ const Header = () => {
 };
 
 export default Header;
-
-/**
- * <div>
-      <p>Header</p>
-      {account.data != undefined ? (
-        <p>{account.data}</p>
-      ) : (
-        <p onClick={() => connect()}>Please connect</p>
-      )}
-    </div>
- */

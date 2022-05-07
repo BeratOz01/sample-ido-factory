@@ -20,6 +20,7 @@ const createWeb3State = ({
   factory,
   project,
   creator,
+  portfolio,
 }) => {
   return {
     web3,
@@ -28,6 +29,7 @@ const createWeb3State = ({
     payment,
     factory,
     project,
+    portfolio,
     creator,
     hooks: setupHooks(web3, provider),
   };
@@ -43,6 +45,7 @@ export default function Web3Provider({ children }) {
       factory: null,
       project: null,
       creator: null,
+      portfolio: null,
     })
   );
 
@@ -56,6 +59,7 @@ export default function Web3Provider({ children }) {
         const factory = await loadContract("Factory", web3);
         const project = await loadContract("ProjectToken", web3);
         const creator = await loadContract("TokenCreator", web3);
+        const portfolio = await loadContract("Portfolio", web3);
         setWeb3Api(
           createWeb3State({
             web3,
@@ -65,6 +69,7 @@ export default function Web3Provider({ children }) {
             factory,
             project,
             creator,
+            portfolio,
           })
         );
       } else {

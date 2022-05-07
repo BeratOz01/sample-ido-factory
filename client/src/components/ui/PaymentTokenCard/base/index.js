@@ -14,7 +14,7 @@ const PaymentTokenCard = () => {
 
   const [balance, setBalance] = React.useState(0);
   const [canRequest, setCanRequest] = React.useState(null);
-  const [cooldown, setCooldown] = React.useState(0);
+  const [cooldown, setCooldown] = React.useState();
   const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
@@ -31,11 +31,23 @@ const PaymentTokenCard = () => {
         setCanRequest(false);
         setCooldown(cooldown);
       }
-
-      // How to get block.timestamp in react
     }
-    if (account?.data && payment) fetchData();
-  }, [payment, account?.data, balance, web3.utils]);
+    if (account?.data && payment && web3) fetchData();
+  }, [payment, account?.data, balance, web3]);
+
+  React.useEffect(() => {
+    let timer;
+
+    if (cooldown && parseInt(cooldown) !== 0) {
+      timer = setInterval(() => {
+        setCooldown(cooldown - 1);
+      }, 1000);
+    }
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [cooldown]);
 
   const onClickRequest = async () => {
     setIsLoading(true);

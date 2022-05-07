@@ -16,3 +16,14 @@ code {
   font-family: 'Poppins',
   sans-serif;
 }
+
+
+.accordion-button:not(.collapsed) {
+  box-shadow: none !important; 
+  color: inherit !important;
+}
+
+.accordion-button::after {
+  color : black !important;
+}
+

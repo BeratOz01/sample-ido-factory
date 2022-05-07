@@ -43,7 +43,7 @@ module.exports = async function (deployer, networks, accounts) {
   });
 
   // Deploy Sample Project Token from token creator
-  await deployer.deploy(ProjectToken, "Project Token", "SPT", 100000, {
+  await deployer.deploy(ProjectToken, "Project Token", "SPT", 100000, admin, {
     from: admin,
   });
 };

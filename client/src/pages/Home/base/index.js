@@ -1,12 +1,12 @@
 import React from "react";
 
 // CSS
-import styles from "./style.module.css";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
 // Hooks
-import { useWeb3 } from "components/providers";
 import { useAccount, useNetwork } from "components/hooks/web3";
+
+// Components
 import {
   Information,
   Loading,

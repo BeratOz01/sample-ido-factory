@@ -14,6 +14,7 @@ library IDOLib {
         bool[] isPortionWithdrawn;
         bool isFinished;
         address tokenAddress;
+        address saleAddress;
     }
 
     struct ERC20 {

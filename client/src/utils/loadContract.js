@@ -29,6 +29,9 @@ export const loadContractWithAddress = async (name, address, web3) => {
     const Artifact = await res.json();
 
     contract = new web3.eth.Contract(Artifact.abi, address);
+    console.log(
+      `Contract ${name} successfully loaded from address ${address}.`
+    );
   } catch (e) {
     console.log(`Contract ${name} not found`);
   }

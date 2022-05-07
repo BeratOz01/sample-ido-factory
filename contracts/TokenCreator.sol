@@ -59,7 +59,12 @@ contract TokenCreator is Ownable {
         uint256 totalSupply
     ) public canCreateERC20 {
         // Create new token
-        ProjectToken token = new ProjectToken(name, symbol, totalSupply);
+        ProjectToken token = new ProjectToken(
+            name,
+            symbol,
+            totalSupply,
+            msg.sender
+        );
 
         // Generated token address
         address tokenAddress = address(token);

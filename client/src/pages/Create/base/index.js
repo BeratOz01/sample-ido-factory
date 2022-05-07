@@ -4,7 +4,7 @@ import React from "react";
 import styles from "./style.module.css";
 
 // Bootstrap
-import { Container, Form, Button } from "react-bootstrap";
+import { Container, Form, Button, Spinner } from "react-bootstrap";
 
 // Hooks
 import { useWeb3 } from "components/providers";
@@ -31,6 +31,8 @@ const Create = () => {
   const [showERC20Modal, setShowERC20Modal] = React.useState(false);
   const [createdTokens, setCreatedTokens] = React.useState();
   const [isCreatedToken, setIsCreatedToken] = React.useState("");
+
+  const [isLoadingTokens, setIsLoadingTokens] = React.useState(true);
 
   const onHideERC20Modal = () => setShowERC20Modal(false);
 
@@ -71,6 +73,7 @@ const Create = () => {
         .call({ from: account?.data });
 
       setCreatedTokens(tokens);
+      setIsLoadingTokens(false);
     }
     if (web3 && account?.data && creator) fetchData();
   }, [web3, account?.data, creator]);
@@ -82,6 +85,7 @@ const Create = () => {
         loading={isLoading}
         onHide={onHide}
         error={error}
+        content="You can checkout your sale from your portfolio and do not forget to send project token to your sale contract from your portfolio. Otherwise contract will throw error."
       />
       <ERC20Modal show={showERC20Modal} onHide={onHideERC20Modal} />
       <p className="text-center poppins fs-3 mt-5">Create Your Own IDO</p>
@@ -190,26 +194,32 @@ const Create = () => {
           >
             Use Sample Project Token
           </Button>
-          {!isSample && (
-            <Button
-              className="text-center poppins shadow-none"
-              variant={"outline-dark"}
-              onClick={() => setShowERC20Modal(true)}
-            >
-              Or Create New ERC20 Token
-            </Button>
-          )}
-          {isSample && (
-            <p className="poppins my-auto">
-              Now using project{" "}
-              <a
-                href={`https://testnet.snowtrace.io/address/${project?._address}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                token
-              </a>
-            </p>
+
+          {isLoadingTokens ? (
+            <Spinner animation="border" variant="primary" />
+          ) : (
+            <>
+              {isSample ? (
+                <p className="poppins my-auto">
+                  Now using project{" "}
+                  <a
+                    href={`https://testnet.snowtrace.io/address/${project?._address}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    token
+                  </a>
+                </p>
+              ) : (
+                <Button
+                  className="text-center poppins shadow-none"
+                  variant={"outline-dark"}
+                  onClick={() => setShowERC20Modal(true)}
+                >
+                  Or Create New ERC20 Token
+                </Button>
+              )}
+            </>
           )}
         </div>
 

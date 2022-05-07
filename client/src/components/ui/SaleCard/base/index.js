@@ -12,13 +12,21 @@ import { useWeb3 } from "components/providers";
 // Spinner
 import { Grid } from "react-loader-spinner";
 
+// react-router-dom
+import { useHistory } from "react-router-dom";
+
 const SaleCard = ({ index }) => {
   const { web3, factory } = useWeb3();
-  const [contract, setContract] = React.useState(null);
+
+  // States
   const [isLoading, setIsLoading] = React.useState(false);
   const [sale, setSale] = React.useState(null);
 
-  const url = `https://picsum.photos/id/${index}/300/300`;
+  // react-router-dom / history
+  const history = useHistory();
+
+  // Random image CDN depending on sale index
+  const url = `https://picsum.photos/id/${index}/350/350`;
 
   React.useEffect(() => {
     async function fetchData() {
@@ -26,9 +34,7 @@ const SaleCard = ({ index }) => {
       await factory.methods
         .getSale(index)
         .call()
-        .then((r) => {
-          setSale(r);
-        })
+        .then((r) => setSale(r))
         .finally(() => setIsLoading(false));
     }
 
@@ -98,7 +104,7 @@ const SaleCard = ({ index }) => {
                   <Button
                     variant="success"
                     className="poppins text-center w-50 mx-auto mt-2 shadow-none"
-                    onClick={() => {}}
+                    onClick={() => history.push(`/sale/${sale.saleAddress}`)}
                   >
                     Go Sale!
                   </Button>

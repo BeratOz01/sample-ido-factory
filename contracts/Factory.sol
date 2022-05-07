@@ -34,7 +34,7 @@ contract Factory is Ownable {
     // Portfolio Contract
     Portfolio public portfolioContract;
 
-    // Sale Struct
+    // Info Struct
     struct InfoSale {
         uint256 id;
         string name;
@@ -108,13 +108,23 @@ contract Factory is Ownable {
     function getUserSales(address _user)
         public
         view
-        returns (uint256[] memory)
+        returns (InfoSale[] memory)
     {
-        return userToSales[_user];
+        uint256[] memory ids = userToSales[_user];
+
+        InfoSale[] memory infoSales = new InfoSale[](ids.length);
+
+        uint256 index;
+        uint256 length = ids.length;
+        for (index; index < length; index++) {
+            infoSales[index] = saleIdToSale[ids[index]];
+        }
+
+        return infoSales;
     }
 
     // Getter function for msg.sender's sales
-    function getMySales() external view returns (uint256[] memory) {
+    function getMySales() external view returns (InfoSale[] memory) {
         return getUserSales(msg.sender);
     }
 

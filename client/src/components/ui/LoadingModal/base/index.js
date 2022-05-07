@@ -1,14 +1,14 @@
 import React from "react";
 
 // Bootstrap
-import { Spinner, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { Audio } from "react-loader-spinner";
 
 // Icons
 import { BiError } from "react-icons/bi";
 import { IoIosThumbsUp } from "react-icons/io";
 
-const LoadingModal = ({ show, onHide, loading, error }) => {
+const LoadingModal = ({ show, onHide, loading, error, content }) => {
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Body className="d-flex flex-column">
@@ -32,6 +32,7 @@ const LoadingModal = ({ show, onHide, loading, error }) => {
         {!loading && !error && (
           <>
             <p className="text-center poppins fs-4">Successfully Created</p>
+            {content && <p className="text-center poppins fs-6">{content}</p>}
             <IoIosThumbsUp className="mx-auto" size={80} color="green" />
           </>
         )}

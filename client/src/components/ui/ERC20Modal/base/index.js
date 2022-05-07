@@ -34,6 +34,7 @@ const ERC20Modal = ({ show, onHide }) => {
       .send({ from: account?.data })
       .catch((e) => setError(true))
       .then(() => setIsCreated(true))
+
       .finally(() => setProgress(false));
   };
 
@@ -57,7 +58,14 @@ const ERC20Modal = ({ show, onHide }) => {
   }, [web3, account?.data, creator, show]);
 
   return (
-    <Modal show={show} centered onHide={onHide}>
+    <Modal
+      show={show}
+      centered
+      onHide={() => {
+        onHide();
+        window.location.reload();
+      }}
+    >
       <Modal.Body>
         {isLoading ? (
           <Loading padding={0}></Loading>
@@ -140,9 +148,8 @@ const ERC20Modal = ({ show, onHide }) => {
             </div>
 
             {cooldown === "0" ? (
-              <p className="w-75 text-center poppins mx-auto mt-3 mb-0">
-                Can create token but do not forget you can create token every 10
-                minutes.
+              <p className="w-75 text-center poppins mx-auto mt-3 mb-0 text-danger">
+                You can create ERC20 Token every 10 minutes and 5 in total.
               </p>
             ) : (
               <p className="w-75 text-center poppins mx-auto mt-3 mb-0">

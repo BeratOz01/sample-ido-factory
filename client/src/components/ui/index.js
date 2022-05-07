@@ -8,3 +8,7 @@ export * from "./LoadingModal";
 export * from "./Sales";
 export * from "./SaleCard";
 export * from "./ERC20Modal";
+export * from "./BuyModal";
+export * from "./ParticipatedSales";
+export * from "./CreatedTokens";
+export * from "./MySales";
