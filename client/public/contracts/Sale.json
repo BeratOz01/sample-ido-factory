@@ -1,5 +1,4 @@
 {
-  "contractName": "Sale",
   "abi": [
     {
       "inputs": [
@@ -471,22 +470,5 @@
       "stateMutability": "view",
       "type": "function"
     }
-  ],
-  "compiler": {
-    "name": "solc",
-    "version": "0.8.12+commit.f00d7308.Emscripten.clang"
-  },
-  "networks": {},
-  "schemaVersion": "3.4.6",
-  "updatedAt": "2022-05-07T22:03:44.429Z",
-  "devdoc": {
-    "kind": "dev",
-    "methods": {},
-    "version": 1
-  },
-  "userdoc": {
-    "kind": "user",
-    "methods": {},
-    "version": 1
-  }
+  ]
 }
