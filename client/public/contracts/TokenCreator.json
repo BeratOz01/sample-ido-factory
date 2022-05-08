@@ -15617,14 +15617,69 @@
       "transactionHash": "0xc6a10cc3484295e3e8b573fd4f3a154a79517696dc8c57b1a4d0aaa1d73d70ad"
     },
     "43113": {
-      "events": {},
+      "events": {
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        },
+        "0x075a2807ecf2e770d44aae1cfce7604675551662e1958cb2a5636d6fe7eba78a": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "components": [
+                {
+                  "internalType": "string",
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "symbol",
+                  "type": "string"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "totalSupply",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "address",
+                  "name": "tokenAddress",
+                  "type": "address"
+                }
+              ],
+              "indexed": false,
+              "internalType": "struct IDOLib.ERC20",
+              "name": "infoToken",
+              "type": "tuple"
+            }
+          ],
+          "name": "TokenCreated",
+          "type": "event"
+        }
+      },
       "links": {},
-      "address": "0xdf86034dAB14f1E1330BBC053CAB23409602afd7",
-      "transactionHash": "0x680c8a3a12d39d87d9992dd8c9140c30488e79b9da2ec0eee29107992077f8e9"
+      "address": "0x6A082b11d1Df934ad9FFb71F62E7ddAb8698966D",
+      "transactionHash": "0xe99b899099a2261012ca4ba957de75ebd9a89ee71193b9dd70b9b1524cec3ff0"
     }
   },
   "schemaVersion": "3.4.6",
-  "updatedAt": "2022-05-08T12:53:16.003Z",
+  "updatedAt": "2022-05-08T14:04:36.718Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

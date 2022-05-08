@@ -25204,14 +25204,90 @@
       "transactionHash": "0x2da799da9c7ee1ccc48f3adbefa1f8cb5c207d7695b3b6766afcf399d8f90f59"
     },
     "43113": {
-      "events": {},
+      "events": {
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        },
+        "0xab721dfc0804937aee6a6b12d9818ff3950ec2ee50dca50587200cb87033c176": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "index",
+              "type": "uint256"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "id",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "string",
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "internalType": "address",
+                  "name": "saleAddress",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "price",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "numberOfPortions",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "timeBetweenPortions",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "address",
+                  "name": "projectToken",
+                  "type": "address"
+                }
+              ],
+              "indexed": false,
+              "internalType": "struct Factory.InfoSale",
+              "name": "infoSale",
+              "type": "tuple"
+            }
+          ],
+          "name": "SaleCreated",
+          "type": "event"
+        }
+      },
       "links": {},
-      "address": "0x73c8974FA614Af115b731Cd91B8A0aE82CD871D3",
-      "transactionHash": "0x7c1e2cdee9505f5710607f718eb2968b926511b9e6fdc169c9735864f2d1d08d"
+      "address": "0x4452279F08F06Df8b096333bDA2C2a30a4591288",
+      "transactionHash": "0xed819057939ce3254bac9408158efcc86b8f96da8501e96c03bb786f1d5375d6"
     }
   },
   "schemaVersion": "3.4.6",
-  "updatedAt": "2022-05-08T12:53:15.971Z",
+  "updatedAt": "2022-05-08T14:04:36.683Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

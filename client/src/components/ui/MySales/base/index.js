@@ -1,7 +1,7 @@
 import React from "react";
 
 // Bootstrap
-import { Accordion, Button, Card, Table } from "react-bootstrap";
+import { Accordion, Button, Card } from "react-bootstrap";
 
 // Styles
 import styles from "./style.module.css";

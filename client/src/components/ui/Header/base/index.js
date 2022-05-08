@@ -1,7 +1,7 @@
 import React from "react";
 
 // CSS
-import { Navbar, Container, Nav, Spinner, NavDropdown } from "react-bootstrap";
+import { Navbar, Container, Nav, Spinner } from "react-bootstrap";
 
 // Hooks
 import { useAccount } from "components/hooks/web3";

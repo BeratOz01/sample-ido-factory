@@ -1,8 +1,5 @@
 import React from "react";
 
-// CSS
-import styles from "./style.module.css";
-
 // Bootstrap
 import { Container, Form, Button, Spinner } from "react-bootstrap";
 

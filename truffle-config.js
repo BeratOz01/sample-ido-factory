@@ -24,7 +24,7 @@ const { mnemonic, api_key } = require("./.env.json");
 module.exports = {
   plugins: ["truffle-plugin-verify"],
   api_keys: {
-    snowtrace: snowtraceApiKey,
+    snowtrace: api_key,
   },
   networks: {
     development: {

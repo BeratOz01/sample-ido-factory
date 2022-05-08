@@ -4,7 +4,7 @@ import React from "react";
 import { Container } from "react-bootstrap";
 
 // Hooks
-import { useAccount, useNetwork } from "components/hooks/web3";
+import { useNetwork } from "components/hooks/web3";
 
 // Components
 import {
@@ -16,7 +16,6 @@ import {
 } from "components/ui";
 
 const Home = () => {
-  const { account } = useAccount();
   const { network } = useNetwork();
 
   return (

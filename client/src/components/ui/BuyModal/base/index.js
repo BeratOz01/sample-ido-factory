@@ -10,9 +10,6 @@ import { useAccount } from "components/hooks/web3";
 // web3uikit
 import { Typography, Button } from "web3uikit";
 
-// utils
-import { loadContractWithAddress } from "utils/loadContract";
-
 const BuyModal = ({ show, onHide, contract, amount, projectTokenContract }) => {
   // Hooks
   const { web3, payment } = useWeb3();
