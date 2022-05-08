@@ -107,7 +107,7 @@ export default function Web3Provider({ children }) {
             try {
               await provider.request({
                 method: "wallet_switchEthereumChain",
-                params: [{ chainId: "0xa86a" }],
+                params: [{ chainId: "0xa869" }],
               });
             } catch (error) {
               window.location.reload();
