@@ -5,8 +5,8 @@ export const loadContract = async (name, web3) => {
     const res = await fetch(`/contracts/${name}.json`);
     const Artifact = await res.json();
 
-    // let networkId = 43113; // FUJI Tesnet
-    let networkId = 1337; // Ganache-cli
+    let networkId = 43113; // FUJI Testnet
+    // let networkId = 1337; // Ganache-cli
 
     contract = new web3.eth.Contract(
       Artifact.abi,

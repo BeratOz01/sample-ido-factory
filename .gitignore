@@ -1,3 +1,4 @@
 secret
 node_modules
 build
+.env.json
