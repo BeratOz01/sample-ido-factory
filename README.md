@@ -202,7 +202,7 @@ Sample Created Sale
 * Better error handling
 
 
-<a id = 'contract-me/>
+<a id = 'contract-me'/>
 
 ### Contact Me
 <p align="center">
